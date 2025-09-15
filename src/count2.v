@@ -2,7 +2,7 @@
 
 module count2(C_100Mhz,C_100mHz);
 input C_100Mhz; //Clock de entrada del FPGA de entrada (Pin 17).
-output reg C_100mHz = 1; //Señal de salida (&lt;em&gt;Se debe asignar un estado lógico&lt;/em&gt;).
+output reg C_100mHz = 1; //Senal de salida (&lt;em&gt;Se debe asignar un estado lÃ³gico&lt;/em&gt;).
 
 reg[25:0] contador = 0; //Variable Contador equivale a 25 millones de estados.
 
