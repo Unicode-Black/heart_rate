@@ -1,56 +1,78 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  title: "Heart Rate Counter & Display"   # Project title shown on the site
+  author: "Luis Vásquez"                  # Your name
+  discord: ""                             # Your Discord (optional, for TT comms/role)
+  description: "Pulse counting, capture and 7-seg display with alarm"  # One-line description
+  language: "Verilog"                     # HDL used (Verilog/SystemVerilog/etc.)
+  clock_hz: 50000000                      # TT system clock in Hz (50 MHz typical)
 
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+  # Number of tiles your design occupies. A single tile is ~167x108 µm.
+  tiles: "1x1"                            # Valid: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2, 8x2
 
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  # Your top module MUST start with "tt_um_". Keep it unique.
+  top_module: "tt_um_heart_rate"
 
-  # List your project's source files here.
-  # Source files must be in ./src and you must list each source file separately, one per line.
-  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
+  # List each source file in ./src, one per line (order can matter).
+  # Also update PROJECT_SOURCES in test/Makefile accordingly.
   source_files:
     - "project.v"
+    - "top.v"
+    - "fsm.v"
+    - "Mux.v"
+    - "count2.v"
+    - "count_pulse2.v"
+    - "Dec_7seg.v"
+    - "DelayCLK.v"
+    - "minuto.v"
+    - "reg_dato.v"
+    - "Selec_auto.v"
+    - "BintoDec.v"
+    - "C_1Hz.v"
+    - "C_60s.v"
+    - "comparador.v"
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
+libraries:
+  - name: sky130_fd_sc_hd
+    path: $PDK_ROOT/sky130A/libs.ref/sky130_fd_sc_hd/verilog
+  - name: sky130_fd_io
+    path: $PDK_ROOT/sky130A/libs.ref/sky130_fd_io/verilog
+
+# Pinout of your project. Leave unused pins blank. DO NOT add/remove pins.
+# Use descriptive names for the datasheet (e.g., RX, TX, SEG_A, etc.).
 pinout:
-  # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  # Dedicated inputs (ui_in[7:0]) → used for set_pulso[7:0]
+  ui[0]: "SET_PULSO_0"    # LSB of threshold/set value
+  ui[1]: "SET_PULSO_1"
+  ui[2]: "SET_PULSO_2"
+  ui[3]: "SET_PULSO_3"
+  ui[4]: "SET_PULSO_4"
+  ui[5]: "SET_PULSO_5"
+  ui[6]: "SET_PULSO_6"
+  ui[7]: "SET_PULSO_7"    # MSB of threshold/set value
 
-  # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  # Dedicated outputs (uo_out[7:0]) → 7-seg segments + alarm
+  uo[0]: "SEG_A"
+  uo[1]: "SEG_B"
+  uo[2]: "SEG_C"
+  uo[3]: "SEG_D"
+  uo[4]: "SEG_E"
+  uo[5]: "SEG_F"
+  uo[6]: "SEG_G"
+  uo[7]: "ALARM"
 
-  # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  # Bidirectional pins (uio[7:0])
+  # Inputs on UIO (set as inputs in RTL via uio_oe=0):
+  uio[0]: "START"         # Start pulse capture
+  uio[1]: "CLS"           # Clear/stop (class/close)
+
+  # Outputs on UIO (set as outputs in RTL via uio_oe=1):
+  uio[2]: "AN0"           # 7-seg anode 0
+  uio[3]: "EN_COUNT"      # Counter enable (debug/status)
+  uio[4]: "EN_CAP"        # Capture enable (debug/status)
+  uio[5]: "CLEAR"         # Internal clear/status
+  uio[6]: ""              # (unused)
+  uio[7]: ""              # (unused)
 
 # Do not change!
 yaml_version: 6
