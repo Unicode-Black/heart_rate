@@ -2,7 +2,7 @@
 
 module DelayCLK (clk,C_1Hz);
 input clk; //Clock de entrada del FPGA de entrada (Pin 17).
-output reg C_1Hz = 1; //Señal de salida (&lt;em&gt;Se debe asignar un estado lógico&lt;/em&gt;).
+output reg C_1Hz = 1; //Senal de salida (&lt;em&gt;Se debe asignar un estado lÃ³gico&lt;/em&gt;).
 
 reg[25:0] contador = 0; //Variable Contador equivale a 25 millones de estados.
 
