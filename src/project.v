@@ -17,7 +17,7 @@ module tt_um_heart_rate (
     wire        cls        = uio_in[1];
     wire [7:0]  set_pulso  = ui_in;      // los 8 bits completos
 
-    // ---- Señales de salida internas de tu top ----
+    // ---- Senales de salida internas de tu top ----
     wire        alarm;
     wire        en_count;
     wire        en_cap;
@@ -25,7 +25,7 @@ module tt_um_heart_rate (
     wire [6:0]  seg;
     wire [2:0]  an;
 
-    // ---- Instancia de tu diseño ----
+    // ---- Instancia de tu diseno ----
     top u_top (
         .clk       (clk),
         .rst       (rst),
@@ -44,7 +44,7 @@ module tt_um_heart_rate (
     assign uo_out[6:0] = seg;    // segmentos a, b, c, d, e, f, g
     assign uo_out[7]   = alarm;  // bit extra para alarma
 
-    // ---- UIO: anodos y señales de estado ----
+    // ---- UIO: anodos y senales de estado ----
     // uio_in[1:0] son entradas (cls, start) => oe=0
     // el resto los usamos como salidas => oe=1
     assign uio_out[2:0] = an;        // anodos
