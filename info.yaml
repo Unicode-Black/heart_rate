@@ -1,8 +1,8 @@
 # Tiny Tapeout project information
 project:
   title: "Heart Rate Counter & Display"   # Project title shown on the site
-  author: "Luis Vásquez"                  # Your name
-  discord: ""                             # Your Discord (optional, for TT comms/role)
+  author: "Luis Vasqeuez, Jenifer Rodriguez, Asdrual Rojas"                  # Your name
+  discord: "roozenn"                             # Your Discord (optional, for TT comms/role)
   description: "Pulse counting, capture and 7-seg display with alarm"  # One-line description
   language: "Verilog"                     # HDL used (Verilog/SystemVerilog/etc.)
   clock_hz: 50000000                      # TT system clock in Hz (50 MHz typical)
