@@ -1,28 +1,35 @@
 `timescale 1ns / 1ps
+/*
+ * Module: minuto
+ * Description:
+ *  This module generates a 60-second pulse (C_60s) by cascading:
+ *   - A 1 Hz clock divider (C_1Hz)
+ *   - A 60-second counter (C_60s)
+ *  It counts seconds only when 'en_cont' is active.
+ */
 
-module minuto
-(
-input rst,
-input en_cont,
-input clk, 
-output C_60s  
+module minuto (
+    input  wire rst,        // Active-high synchronous reset
+    input  wire en_cont,    // Enable counting
+    input  wire clk,        // System clock input
+    output wire C_60s       // Output pulse every 60 seconds
 );
 
-wire w1;
+    // Internal 1 Hz signal
+    wire w1;
 
-// Instantiate the module
-C_1Hz count1(
-    .clk(clk),
-    .C_1Hz(w1)
+    // 1 Hz divider from system clock
+    C_1Hz count1 (
+        .clk(clk),
+        .C_1Hz(w1)
     );
 
-// Instantiate the module
-C_60s cuount_2(
-    .en_cont(en_cont),
-    .rst(rst),
-    .C_1Hz(w1), 
-    .C_60s(C_60s)
+    // 60-second counter, triggered by 1 Hz pulses
+    C_60s count_2 (
+        .en_cont(en_cont),
+        .rst(rst),
+        .C_1Hz(w1),
+        .C_60s(C_60s)
     );
-    
+
 endmodule
-
