@@ -16,7 +16,6 @@
  *  - All resets are active-high.
  *  - C_1Hz and C_100mHz are internal derived clocks; declare them explicitly to avoid IMPLICIT warnings.
  */
-
 module top(
     input  wire       clk,        // System clock
     input  wire       rst,        // Active-high reset
