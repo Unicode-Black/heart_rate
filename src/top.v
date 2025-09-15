@@ -5,7 +5,7 @@ input clk,
 input rst,
 input start,
 input cls,
-//input pulso,  señal que por ahora esta simulada
+//input pulso,  senal que por ahora esta simulada
 input [7:0] set_pulso,
 output alarm,
 output en_count,
